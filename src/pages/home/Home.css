@@ -1,0 +1,171 @@
+header {
+    background-color: white;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    box-shadow: -5px 0 3px #999999;
+    z-index: 4;
+  }
+  header > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  header > div > svg {
+    padding: 5px;
+    margin-right: 5px;
+  }
+  header > div > span {
+    margin-right: 10px;
+  }
+  header > div > span::after {
+    content: '';
+    background-color: #999999;
+    height: 41px;
+    width: 2px;
+    position: absolute;
+    right: 50px;
+    top: 2px;
+  }
+  nav {
+    position: fixed;
+    background-color: #0366d6;
+    height: 100%;
+    width: 45px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: all 0.5s;
+    z-index: 4;
+  }
+  nav > a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+  }
+  nav > a > svg {
+    padding: 5px;
+  }
+  nav > a > span {
+    position: absolute;
+    left: 55px;
+    white-space: nowrap;
+    color: white;
+  }
+  nav > a > span::before {
+    content: '';
+    color: white;
+    background-color: white;
+    position: absolute;
+    height: 41px;
+    width: 2px;
+    top: -10px;
+    left: -10px;
+  }
+  nav > a:hover {
+    background-color: #005cc5;
+  }
+  nav > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+  }
+  nav > div > svg {
+    padding: 5px;
+  }
+  nav > div > span {
+    position: absolute;
+    left: 55px;
+    white-space: nowrap;
+    color: white;
+  }
+  nav > div > span::before {
+    content: '';
+    color: white;
+    background-color: white;
+    position: absolute;
+    height: 41px;
+    width: 2px;
+    top: -10px;
+    left: -10px;
+  }
+  nav > div:hover {
+    background-color: #005cc5;
+  }
+  nav:hover {
+    width: 200px;
+    box-shadow: 0 5px 3px #999999;
+  }
+  .content {
+    padding: 60px 60px;
+  }
+  .iconLoading {
+    margin-left: 45px;
+  }
+  .iconLoading > div {
+    position: fixed;
+    z-index: 10;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .iconLoading > div::before {
+    content: '';
+    position: fixed;
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    opacity: 0.5;
+  }
+  .iconLoading > div > svg {
+    animation: spin 1s linear infinite;
+    z-index: +5;
+  }
+  
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .iconLoading {
+      margin-left: 10px;
+    }
+    nav {
+      width: 100%;
+      flex-direction: row;
+      height: 45px;
+      bottom: 0;
+      justify-content: space-evenly;
+      transition: none;
+      overflow-x: auto;
+    }
+    nav:hover {
+      width: 100%;
+    }
+    nav > a > span {
+      visibility: hidden;
+      position: fixed;
+    }
+    nav > div > span {
+      visibility: hidden;
+      position: fixed;
+    }
+    .content {
+      padding: 60px 10px;
+    }
+  }
+  

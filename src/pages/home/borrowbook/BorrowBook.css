@@ -1,0 +1,87 @@
+.borrowbook > form > div:nth-child(1) {
+  background-color: white;
+  width: 70%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.borrowbook > form {
+  background-color: white;
+}
+
+.borrowbook > form > button {
+  height: 34px;
+  font-size: 15px;
+  margin-bottom: 10px;
+  outline: none;
+  border: none;
+  background-color: #fb8532;
+  color: white;
+  box-shadow: 0 0 5px #999999;
+  width: 70%;
+}
+
+.borrowbook > form > div:nth-child(1) > span {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.borrowbook > form > div:nth-child(1) > input {
+  padding: 5px;
+  font-size: 18px;
+  outline: none;
+  border: none;
+  box-shadow: 0 0 5px #999999;
+}
+
+.borrowbook > form > div:nth-child(2) {
+  background-color: white;
+  width: 70%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+.borrowbook > form > div:nth-child(2) > span {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.borrowbook > form > div:nth-child(2) > button {
+  height: 34px;
+  font-size: 15px;
+  margin-bottom: 10px;
+  outline: none;
+  border: none;
+  background-color: #ea4a5a;
+  color: white;
+  box-shadow: 0 0 5px #999999;
+}
+.borrowbook > form > div:nth-child(2) > div {
+  width: 100%;
+}
+.borrowbook > form > div:nth-child(2) > div > input {
+  padding: 5px;
+  font-size: 18px;
+  outline: none;
+  border: none;
+  box-shadow: 0 0 5px #999999;
+  margin-bottom: 10px;
+  width: 100%;
+}
+.inputHari > input {
+  width: 60px !important;
+  margin: 0;
+}
+.inputHari > span {
+  margin-left: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+  .borrowbook > form > div:nth-child(1),
+  .borrowbook > form > div:nth-child(2),
+  .borrowbook > form > button {
+    width: 100%;
+  }
+}

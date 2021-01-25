@@ -1,0 +1,84 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .login > form {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    align-items: center;
+    width: 50%;
+    padding: 40px 20px 40px 20px;
+    border-radius: 3px;
+    box-shadow: 0 0 5px #999999;
+    background-color: #0366d6;
+  }
+  
+  .login > form > span {
+    font-size: 35px;
+    margin-bottom: 15px;
+    color: white;
+  }
+  
+  .login > form > input {
+    height: 40px;
+    margin-bottom: 15px;
+    padding: 0 10px 0 10px;
+    outline: none;
+    border: none;
+    box-shadow: 0 0 3px #999999;
+    font-size: 18px;
+    border-radius: 3px;
+    width: 100%;
+    color: #586069;
+  }
+  
+  .login > form > input::placeholder {
+    color: #d1d5da;
+  }
+  
+  .login > form > button {
+    height: 40px;
+    outline: none;
+    border: none;
+    box-shadow: 0 0 3px #999999;
+    border-radius: 3px;
+    background-color: #ea4a5a;
+    font-size: 18px;
+    color: white;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  .login > form > a {
+    color: white;
+  }
+  
+  .login > form > button:hover {
+    background-color: #d73a49;
+  }
+  
+  @media only screen and (max-width: 992px) {
+    .login > form {
+      width: 70%;
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    .login > form {
+      width: 90%;
+    }
+  }
+  
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  #iconLoading {
+    animation: spin 1s linear infinite;
+  }
+  

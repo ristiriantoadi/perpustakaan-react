@@ -1,0 +1,175 @@
+.member > .first {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  background-color: white;
+}
+.member > .first > div:nth-child(2) {
+  background-color: white;
+  width: 300px;
+  padding: 20px;
+  box-shadow: 0 0 5px #999;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px;
+}
+.member > .first > div:nth-child(1) {
+  width: 400px;
+  background-color: white;
+  padding: 20px;
+  margin: 10px;
+  box-shadow: 0 0 5px #999999;
+}
+.member > .first > div:nth-child(1) > input {
+  width: 100%;
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 18px;
+  outline: none;
+  border: none;
+  box-shadow: 0 0 5px #999999;
+}
+.listMember {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin: 10px;
+  padding: 20px;
+  box-shadow: 0 0 5px #999;
+  position: relative;
+  overflow: hidden;
+  width: 300px;
+}
+.listMember > svg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: rotate(70deg);
+  z-index: 1;
+}
+.listMember > div {
+  display: flex;
+  flex-direction: row;
+  padding: 10px 0;
+  justify-content: space-between;
+  z-index: 2;
+  position: relative;
+}
+.listMember > div:nth-child(2) {
+  display: flex;
+  flex-direction: row;
+}
+.listMember > div:nth-child(2) > div {
+  display: flex;
+  flex-direction: column;
+  width: 180px;
+  overflow-x: auto;
+}
+.listMember > div:nth-child(2) > div > span {
+  margin-bottom: 5px;
+}
+.listMember > div:nth-child(2) > div > ol {
+  list-style-type: upper-roman;
+  margin-left: 40px;
+}
+.listMember > div:nth-child(2) > div > ol > li {
+  margin-bottom: 10px;
+}
+.containerListMember {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: white;
+}
+.modal {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+}
+.modal > div {
+  background-color: white;
+  box-shadow: 0 0 5px #999;
+  z-index: 1;
+  padding: 20px;
+  width: 60%;
+}
+.modal > div::before {
+  opacity: 1;
+  background-color: white;
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  opacity: 0.4;
+}
+.modal > div > form {
+  display: flex;
+  flex-direction: column;
+}
+.modal > div > form > input {
+  height: 40px;
+  margin-bottom: 10px;
+  outline: none;
+  border: none;
+  box-shadow: 0 0 5px #999;
+  padding: 0 10px;
+  font-size: 18px;
+}
+.modal > div > form > button {
+  height: 40px;
+  outline: none;
+  border: none;
+  font-size: 18px;
+  box-shadow: 0 0 5px #999;
+  background-color: #ffd33d;
+  color: white;
+}
+.modal > div > form > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.modal > div > form > div > span {
+  font-size: 20px;
+}
+.modal > div > form > div > div {
+  cursor: pointer;
+}
+.modalView > div > div {
+  margin: 10px 0 10px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.modalView > div > div:nth-child(1) > span {
+  font-size: 20px;
+}
+.modalView > div > div > button {
+  outline: none;
+  border: none;
+  padding: 5px;
+  background-color: #f66a0a;
+  color: white;
+}
+@media only screen and (max-width: 768px) {
+  .modal > div {
+    width: 90%;
+  }
+}
