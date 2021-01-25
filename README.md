@@ -1,5 +1,5 @@
-install react-router-dom
-install axios
-install react-apexcharts
+<h1>install react-router-dom
+<h1>install axios
+<h1>nstall react-apexcharts
 
-database NOSQL
+<spam>database NOSQL
