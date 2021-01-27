@@ -46,6 +46,7 @@ export default function Home() {
     Promise.all([book, member])
       .then((response) => {
         const [bookResponse, memberResponse] = response;
+        console.log(bookResponse)
         dispatch({
           type: GET_DATA,
           book: bookResponse.data.book,

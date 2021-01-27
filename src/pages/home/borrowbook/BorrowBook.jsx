@@ -40,6 +40,7 @@ export default function BorrowBook() {
     };
 
     inputBook.map(async (e) => {
+      // console.log(state.book);
       const book = state.book.filter((f) => f._id === e);
       const availableChange = book[0].available - 1;
       await patchData(
@@ -98,6 +99,7 @@ export default function BorrowBook() {
   }
 
   function handleOnchengeInputMember(e) {
+    // console.log(e.target.list.innerText);
     setInputMember(e.target.list.innerText);
   }
 
