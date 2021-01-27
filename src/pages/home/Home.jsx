@@ -38,14 +38,15 @@ export default function Home() {
     history.push('/login');
   }
   useEffect(() => {
-    const book = getData(`${ServerURL}/book`, localStorage.getItem('token'));
-    const member = getData(
+    const book = getData(`${ServerURL}/book`, localStorage.getItem('token'));//this is a promise
+    const member = getData(//this is a promise. getData return promise
       `${ServerURL}/member`,
       localStorage.getItem('token')
     );
     Promise.all([book, member])
       .then((response) => {
         const [bookResponse, memberResponse] = response;
+        console.log(bookResponse.data)
         dispatch({
           type: GET_DATA,
           book: bookResponse.data.book,

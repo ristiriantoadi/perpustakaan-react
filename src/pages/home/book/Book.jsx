@@ -37,7 +37,7 @@ export default function Book() {
   function handleSearchBook(e) {
     dispatch({ type: SEACRH_BOOK, loading: true });
     getData(`${ServerURL}/book`, localStorage.getItem('token')).then((res) => {
-      const rs = res.data.book.filter((dt) =>
+      const rs = res.data.book.filter((dt) =>//rs is a shorthand for result
         dt.title.match(new RegExp(e.target.value, 'im'))
       );
       dispatch({

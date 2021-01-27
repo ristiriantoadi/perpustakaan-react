@@ -16,7 +16,7 @@ export default function Dashboard() {
       const rs = state.member.filter((e) => {
         return e.borrowedBooks.books.length !== 0;
       });
-      setBorrower(rs.length);
+      setBorrower(rs.length);//rs is the subset of member that have borrowed book
     }
     state.member &&
       state.member

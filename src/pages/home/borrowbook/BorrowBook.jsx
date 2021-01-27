@@ -20,7 +20,7 @@ export default function BorrowBook() {
 
   useEffect(() => {
     if (state.member !== null && state.member !== undefined) {
-      const mmbrNtBr = state.member.filter((e) => {
+      const mmbrNtBr = state.member.filter((e) => {//this is finding member that doesnt have borrowed book
         return e.borrowedBooks.books.length === 0;
       });
       setMemberNotBorrowBook(mmbrNtBr);
@@ -39,22 +39,28 @@ export default function BorrowBook() {
       },
     };
 
-    inputBook.map(async (e) => {
-      const book = state.book.filter((f) => f._id === e);
-      const availableChange = book[0].available - 1;
-      await patchData(
+    inputBook.map(async (e) => {//inputBook is a list of id of will-be-borrowed book
+      const book = state.book.filter((f) => f._id === e);//input book should be an array of book id because they compare it with f._id
+      const availableChange = book[0].available - 1;//kalau bukunya dipinjam, availablenya kurang satu
+      await patchData(//update jumlah buku yang tersedia setelah dipinjam
         `${ServerURL}/book/${e}`,
         { available: availableChange },
         localStorage.getItem('token')
       );
     });
 
-    const changeMember = await patchData(
+    //this is setting the borrowed book for the member
+    //going this way a member can only borrow book one time
+    //if he borrow one, and want to borrow again, it will be hard to do it
+    const changeMember = await patchData(//this is the function that say user borrrow a book
       `${ServerURL}/member/${inputMember.substring(0, 24)}`,
+      // `${ServerURL}/member/${inputMember}`,
       data,
       localStorage.getItem('token')
     );
-
+    
+    //as the transaction succesful, get data member 
+    //and get data book again, update them
     if (changeMember) {
       const getDataMember = await getData(
         `${ServerURL}/member`,
@@ -78,19 +84,20 @@ export default function BorrowBook() {
   }
 
   function handleClickPlus() {
-    if (count.length <= 4) {
+    if (count.length <= 4) {//maksimal cuma bisa pinjam 5 buku (i.e. klik tombol tambah yang merah itu cuma bisa sampai lima kali)
       setCount([...count, count.length + 1]);
     }
   }
 
   function handleChangeBook(e) {
     setInputBook([
-      ...inputBook,
+      ...inputBook,//what is e.target.id 
       (inputBook[Number(e.target.id)] = e.target.list.innerText.substring(
         0,
         24
       )),
     ]);
+    
     setNameBook([
       ...nameBook,
       (nameBook[Number(e.target.id)] = e.target.value),
@@ -98,7 +105,12 @@ export default function BorrowBook() {
   }
 
   function handleOnchengeInputMember(e) {
-    setInputMember(e.target.list.innerText);
+    const member = memberNotBorrowBook.filter(m=>{
+      if (m.name == e.target.value){
+        return m
+      }
+    })
+    setInputMember(member[0]._id);
   }
 
   function handleChangeDay(e) {
@@ -111,6 +123,7 @@ export default function BorrowBook() {
         <div>
           <span>Pilih Peminjam</span>
           <input
+            type="text"
             list='member'
             placeholder='Pilih peminjam Buku'
             onChange={handleOnchengeInputMember}
@@ -159,6 +172,7 @@ export default function BorrowBook() {
   );
 }
 
+//This is the input box that shows up after we click tambah button
 function BookInput(props) {
   const [bookAvilable, setBookAvilable] = useState(null);
   const [state] = useStateGlobal();
@@ -168,7 +182,7 @@ function BookInput(props) {
     if (state.book !== null && state.book !== undefined) {
       const bookAvilable = state.book.filter((e) => {
         return (
-          e.available.books !== 0 &&
+          e.available.books !== 0 &&//shouldnt this just e.available !== 0
           e.title !== book1 &&
           e.title !== book2 &&
           e.title !== book3 &&
