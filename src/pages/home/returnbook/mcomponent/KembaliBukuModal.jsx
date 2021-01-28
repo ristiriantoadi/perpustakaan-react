@@ -5,7 +5,7 @@ import { ServerURL } from '../../../../config/default.json';
 import { GET_DATA, POST_MEMBER } from '../../../../utils/types';
 import CloseIcon from '../../../../assets/icon/CloseIcon';
 
-export default function KembaliBukuModal({ handleGetRefKembaliBuku }) {
+export default function KembaliBukuModal({ handleGetRefKembaliBuku,book,borrowed }) {
   const [formInputMember, setFormInputMember] = useState({});
   const modalCreate = useRef(null);
   const formInput = useRef(null);
@@ -64,12 +64,12 @@ export default function KembaliBukuModal({ handleGetRefKembaliBuku }) {
       <div>
         <form onSubmit={handleSubmitKembaliBuku} ref={formInput}>
           <div>
-            <span>Kembali Buku (How to Write A Novel)</span>
+            <span>Kembali Buku ({book.title})</span>
             <div onClick={closeModalCrete}>
               <CloseIcon height='20px' width='20px' color='black' />
             </div>
           </div>
-          <span className="info">Jadwal Kembali: 2021-01-20</span>
+          <span className="info">Jadwal Kembali: {borrowed.schedule.substring(0, 10)}</span>
           <span className="info">Denda: Rp. 10.000</span>  
           {/* <input
             autoComplete='off'

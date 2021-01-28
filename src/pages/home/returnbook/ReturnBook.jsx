@@ -27,12 +27,16 @@ export default function ReturnBook() {
   function getRefFromChildKembaliBuku(e) {
 
     //this thing get called whenever the page load
-    console.log("get ref from child kembali buku called")
+    // console.log("get ref from child kembali buku called")
     
     //e.current is div.containerModalCreate.modal
     //this is the root div in the return function of CreateMemberModal
-    console.log(e)
+    // console.log(e)
     if (e.current) {
+      // e.book = {title:"Something",_id:1}
+      // e.borrowed = {schedule:"something",book:1}
+      // console.log("e: ")
+      // console.log(e)
       setRefFromModlaKembaliBuku(e);
     }
   }
@@ -40,18 +44,24 @@ export default function ReturnBook() {
   function getRefFromChildPerpanjangPeminjaman(e) {
 
     //this thing get called whenever the page load
-    console.log("get ref from child kembali buku called")
+    // console.log("get ref from child kembali buku called")
     
     //e.current is div.containerModalCreate.modal
     //this is the root div in the return function of CreateMemberModal
-    console.log(e)
+    // console.log(e)
     if (e.current) {
       setRefFromModlaPerpanjangPeminjaman(e);
     }
   }
 
-  function handleClickKembaliBuku() {
+  function handleClickKembaliBuku(borrowData,book) {
+    // console.log("Borrow data: ")
+    // console.log(borrowData)
+    // console.log("book: ")
+    // console.log(book)
     if (refFromModlaKembaliBuku.current) {
+      // refFromModlaKembaliBuku.borrowed = borrowData;
+      // refFromModlaKembaliBuku.book = book;
       refFromModlaKembaliBuku.current.style.visibility = 'visible';
     }
   }
@@ -80,14 +90,19 @@ export default function ReturnBook() {
     );
   }
 
+  function setBook(book){
+
+  }
+
   return (
     <section className='member content'>
-      <KembaliBukuModal
+      {/* <KembaliBukuModal
+        handleClickKembaliBuku={handleClickKembaliBuku}
         handleGetRefKembaliBuku={getRefFromChildKembaliBuku}
-      />
-      <PerpanjangPeminjamanModal
+      /> */}
+      {/* <PerpanjangPeminjamanModal
         handleGetRefPerpanjangPeminjaman={getRefFromChildPerpanjangPeminjaman}
-      />
+      /> */}
       <div className='first'>
         <div>
           <input
@@ -103,8 +118,8 @@ export default function ReturnBook() {
           books.map((e, i) => {
             return (
               <ListMember
-                handleClickKembaliBuku={handleClickKembaliBuku}
-                handleClickPerpanjangPeminjaman={handleClickPerpanjangPeminjaman}
+                // handleClickKembaliBuku={handleClickKembaliBuku}
+                // handleClickPerpanjangPeminjaman={handleClickPerpanjangPeminjaman}
                 name={e.name}
                 kelas={e.kelas}
                 
