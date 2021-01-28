@@ -90,23 +90,26 @@ export default function BorrowBook() {
   }
 
   function handleChangeBook(e) {
-
-    //check if book is available for borrowing
+    console.log("handle change book called")
+    // console.log(e.bookAvilable);
+    console.log(e.target.value)
     const book = e.bookAvilable.filter(b=>{
       if (b.title == e.target.value){
         return b
       }
     })
 
-    setInputBook([
-      ...inputBook,//what is e.target.id 
-      (inputBook[Number(e.target.id)] = book[0]._id)
-    ]);
-    setNameBook([
-      ...nameBook,
-      (nameBook[Number(e.target.id)] = book[0].title)
-    ]);
-    
+    if(book.length != 0){
+      setInputBook([
+        ...inputBook,//what is e.target.id 
+        (inputBook[Number(e.target.id)] = book[0]._id)
+      ]);
+      
+      setNameBook([
+        ...nameBook,
+        (nameBook[Number(e.target.id)] = book[0].title)
+      ]);
+    }
   }
 
   function handleOnchengeInputMember(e) {
@@ -139,7 +142,7 @@ export default function BorrowBook() {
               memberNotBorrowBook.map((e) => {
                 return (
                   <option key={e._id} value={e.name}>
-                    {e._id}
+                    {e.name}
                   </option>
                 );
               })}
@@ -196,6 +199,8 @@ function BookInput(props) {
           e.title !== book5
         );
       });
+      console.log("book available: ")
+      console.log(bookAvilable);
       setBookAvilable(bookAvilable);
     }
   }, [state, book1, book2, book3, book4, book5]);
@@ -208,6 +213,7 @@ function BookInput(props) {
   return (
     <div>
       <input
+        autoComplete="off"
         list='book'
         name={props.name}
         placeholder='Pilih buku yang di Pinjam'
@@ -219,7 +225,7 @@ function BookInput(props) {
           bookAvilable.map((e, i) => {
             return (
               <option key={i} value={e.title}>
-                {e._id}
+                {e.title}
               </option>
             );
           })}

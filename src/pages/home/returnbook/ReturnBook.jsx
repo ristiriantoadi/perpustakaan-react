@@ -5,9 +5,13 @@ import { ServerURL } from '../../../config/default.json';
 import { GET_DATA, SEACRH_MEMBER } from '../../../utils/types';
 import ListMember from './mcomponent/ListMember';
 import './ReturnBook.css';
+import KembaliBukuModal from './mcomponent/KembaliBukuModal';
+import PerpanjangPeminjamanModal from './mcomponent/PerpanjangPeminjamanModal';
 
 export default function ReturnBook() {
   const [state, dispatch] = useStateGlobal();
+  const [refFromModlaKembaliBuku, setRefFromModlaKembaliBuku] = useState(null);
+  const [refFromModlaPerpanjangPeminjaman, setRefFromModlaPerpanjangPeminjaman] = useState(null);
   const [books, setBooks] = useState(null);
 
   useEffect(() => {
@@ -19,6 +23,44 @@ export default function ReturnBook() {
       setBooks(rs);
     }
   }, [state]);
+
+  function getRefFromChildKembaliBuku(e) {
+
+    //this thing get called whenever the page load
+    console.log("get ref from child kembali buku called")
+    
+    //e.current is div.containerModalCreate.modal
+    //this is the root div in the return function of CreateMemberModal
+    console.log(e)
+    if (e.current) {
+      setRefFromModlaKembaliBuku(e);
+    }
+  }
+
+  function getRefFromChildPerpanjangPeminjaman(e) {
+
+    //this thing get called whenever the page load
+    console.log("get ref from child kembali buku called")
+    
+    //e.current is div.containerModalCreate.modal
+    //this is the root div in the return function of CreateMemberModal
+    console.log(e)
+    if (e.current) {
+      setRefFromModlaPerpanjangPeminjaman(e);
+    }
+  }
+
+  function handleClickKembaliBuku() {
+    if (refFromModlaKembaliBuku.current) {
+      refFromModlaKembaliBuku.current.style.visibility = 'visible';
+    }
+  }
+
+  function handleClickPerpanjangPeminjaman() {
+    if (refFromModlaPerpanjangPeminjaman.current) {
+      refFromModlaPerpanjangPeminjaman.current.style.visibility = 'visible';
+    }
+  }
 
   function handleSearchMember(e) {
     dispatch({ type: SEACRH_MEMBER, loading: true });
@@ -40,6 +82,12 @@ export default function ReturnBook() {
 
   return (
     <section className='member content'>
+      <KembaliBukuModal
+        handleGetRefKembaliBuku={getRefFromChildKembaliBuku}
+      />
+      <PerpanjangPeminjamanModal
+        handleGetRefPerpanjangPeminjaman={getRefFromChildPerpanjangPeminjaman}
+      />
       <div className='first'>
         <div>
           <input
@@ -55,6 +103,8 @@ export default function ReturnBook() {
           books.map((e, i) => {
             return (
               <ListMember
+                handleClickKembaliBuku={handleClickKembaliBuku}
+                handleClickPerpanjangPeminjaman={handleClickPerpanjangPeminjaman}
                 name={e.name}
                 kelas={e.kelas}
                 
