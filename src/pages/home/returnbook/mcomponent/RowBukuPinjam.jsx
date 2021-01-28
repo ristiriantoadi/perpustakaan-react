@@ -63,8 +63,44 @@ export default function RowBukuPinjam(props) {
         }
       }
 
+    // new Date("dateString") is browser-dependent and discouraged, so we'll write
+    // a simple parse function for U.S. date format (which does no error checking)
+    // function parseDate(str) {
+    //     var mdy = str.split('-');
+    //     return new Date(mdy[2], mdy[0]-1, mdy[1]);
+    // }
+
+    function datediff(first, second) {
+        // Take the difference between the dates and divide by milliseconds per day.
+        // Round to nearest whole number to deal with DST.
+        return Math.round((second-first)/(1000*60*60*24));
+    }
+
+    function hitungDenda(){
+        // console.log(Date(props.b.schedule.substring(0, 10)))
+        // console.log(Date.now())
+        var currentDate = Date.now()
+        var scheduleDate = Date.parse(props.b.schedule)
+        var diff =  Math.floor((currentDate-scheduleDate)/ 86400000); 
+        console.log(diff)
+        // console.log(props.b.schedule.substring(0, 10))
+        // const scheduleDate = new Date(props.b.schedule.substring(0, 10))
+        // const currentDate = new Date()
+        // console.log(datediff(currentDate-scheduleDate))
+        // console.log(date)
+        const scheduleYear = props.b.schedule.substring(0, 10).split("-")[0]
+        const scheduleMonth = props.b.schedule.substring(0, 10).split("-")[1]
+        const scheduleDay = props.b.schedule.substring(0, 10).split("-")[2]
+
+        // const date = new Date()
+        // const currentDate = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+        // console.log(currentDate)
+
+    }
+
     return (
         <div className="row-buku-pinjam">
+            {hitungDenda()}
           <KembaliBukuModal
             // handleClickKembaliBuku={handleClickKembaliBuku}
             handleGetRefKembaliBuku={getRefFromChildKembaliBuku}
