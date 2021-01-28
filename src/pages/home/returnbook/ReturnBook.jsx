@@ -18,7 +18,7 @@ export default function ReturnBook() {
     document.title = 'Perpustakaan - Member';
     if (state.member !== null) {
       const rs = state.member.filter((e) => {//this should return the members that have borrowed book, but they put it in books
-        return e.borrowedBooks.books.length !== 0;
+        return e.borrowedBooks.length !== 0;
       });
       setBooks(rs);
     }

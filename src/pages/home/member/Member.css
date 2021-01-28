@@ -34,7 +34,7 @@
   border: none;
   box-shadow: 0 0 5px #999999;
 }
-.listMember {
+.listMember-member {
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -43,16 +43,16 @@
   box-shadow: 0 0 5px #999;
   position: relative;
   overflow: hidden;
-  width: 300px;
+  width: auto;
 }
-.listMember > svg {
+.listMember-member > svg {
   position: absolute;
   top: 0;
   right: 0;
   transform: rotate(70deg);
   z-index: 1;
 }
-.listMember > div {
+.listMember-member > div {
   display: flex;
   flex-direction: row;
   padding: 10px 0;
@@ -60,17 +60,17 @@
   z-index: 2;
   position: relative;
 }
-.listMember > div:nth-child(2) {
+.listMember-member > div:nth-child(2) {
   display: flex;
   flex-direction: row;
 }
-.listMember > div:nth-child(2) > div {
+.listMember-member > div:nth-child(2) > div {
   display: flex;
   flex-direction: column;
   width: 180px;
   overflow-x: auto;
 }
-.listMember > div:nth-child(2) > div > span {
+.listMember-member > div:nth-child(2) > div > span {
   margin-bottom: 5px;
 }
 .containerListMember {

@@ -23,7 +23,7 @@ export default function KembaliBukuModal({ handleGetRefKembaliBuku }) {
     setFormInputMember({ ...formInputMember, [e.target.name]: e.target.value });
   }
 
-  function handleSubmitMemberCreate(e) {
+  function handleSubmitKembaliBuku(e) {
     if (state.loading !== true) {
       const { name, kelas } = formInputMember;
       const newStateFprmCreateMember = {
@@ -62,14 +62,16 @@ export default function KembaliBukuModal({ handleGetRefKembaliBuku }) {
   return (
     <div className='containerModalCreate modal' ref={modalCreate}>
       <div>
-        <form onSubmit={handleSubmitMemberCreate} ref={formInput}>
+        <form onSubmit={handleSubmitKembaliBuku} ref={formInput}>
           <div>
-            <span>Kembali Buku</span>
+            <span>Kembali Buku (How to Write A Novel)</span>
             <div onClick={closeModalCrete}>
               <CloseIcon height='20px' width='20px' color='black' />
             </div>
           </div>
-          <input
+          <span className="info">Jadwal Kembali: 2021-01-20</span>
+          <span className="info">Denda: Rp. 10.000</span>  
+          {/* <input
             autoComplete='off'
             required
             onChange={handleChngeCreateMember}
@@ -84,8 +86,8 @@ export default function KembaliBukuModal({ handleGetRefKembaliBuku }) {
             type='text'
             name='kelas'
             placeholder='kelas'
-          />
-          <button type='submit'>Submit</button>
+          /> */}
+          <button type='submit'>Kembali Buku</button>
         </form>
       </div>
     </div>

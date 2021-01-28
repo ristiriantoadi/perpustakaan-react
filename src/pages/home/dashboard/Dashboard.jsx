@@ -14,14 +14,15 @@ export default function Dashboard() {
     document.title = 'Perpustakaan';
     if (state.member !== null) {
       const rs = state.member.filter((e) => {
-        return e.borrowedBooks.books.length !== 0;
+        // return e.borrowedBooks.books.length !== 0;
+        return e.borrowedBooks.length !== 0
       });
       setBorrower(rs.length);//rs is the subset of member that have borrowed book
     }
     state.member &&
       state.member
         .filter((e) => {
-          return e.borrowedBooks.books.length !== 0;
+          return e.borrowedBooks.length !== 0;
         })
         .map((e) => {
           return dtchrt.push({

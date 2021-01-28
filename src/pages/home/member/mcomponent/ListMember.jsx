@@ -61,7 +61,7 @@ export default function ListMember(props) {
   }
 
   return (
-    <div className='listMember'>
+    <div className='listMember-member'>
       <div>
         <div
           onClick={() => {
@@ -81,8 +81,8 @@ export default function ListMember(props) {
         <div>
           <span>{props.name}</span>
           <span>{props.class}</span>
-    
-          <span>{props.borrowedBooks.books.length}</span>
+          {/* <span>{props.borrowedBooks.books.length}</span> */}
+          <span>{props.borrowedBooks.length}</span>
         </div>
       </div>
       <IdCardIcon height='200px' width='200px' color='#e1e4e8' />

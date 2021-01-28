@@ -21,7 +21,7 @@ export default function BorrowBook() {
   useEffect(() => {
     if (state.member !== null && state.member !== undefined) {
       const mmbrNtBr = state.member.filter((e) => {//this is finding member that doesnt have borrowed book
-        return e.borrowedBooks.books.length === 0;
+        return e.borrowedBooks.length === 0;
       });
       setMemberNotBorrowBook(mmbrNtBr);
     }
@@ -32,12 +32,29 @@ export default function BorrowBook() {
     dispatch({ type: UPDATE_MEMBER, loading: true });
     const date = new Date(Date.now() + 3600 * 1000 * day);
 
+    // console.log(inputBook)
+    var borrowedBooks = [];
+    inputBook.forEach(b=>{
+      borrowedBooks.push({
+        book:b,
+        schedule:date
+      })
+    })
+    // console.log("borrowed book")
+    // console.log(borrowedBooks);
+    // return;
+
     const data = {
-      borrowedBooks: {
-        books: inputBook,
-        schedule: date,
-      },
+      borrowedBooks
     };
+
+    //the data needs to be
+    // [
+    //   {
+    //     book,
+    //     schedule
+    //   } 
+    // ]
 
     inputBook.map(async (e) => {//inputBook is a list of id of will-be-borrowed book
       const book = state.book.filter((f) => f._id === e);//input book should be an array of book id because they compare it with f._id

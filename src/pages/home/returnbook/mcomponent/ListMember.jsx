@@ -75,13 +75,13 @@ export default function ListMember(props) {
           <span>{props.kelas}</span>
           {/* <span>{props.borrowedBooks.schedule.substring(0, 10)}</span> */}
           <ol>
-            {props.borrowedBooks.books.map((e, i) => {
-              const bookData = state.book.filter((c) => c._id === e);
+            {props.borrowedBooks.map((e, i) => {
+              const bookData = state.book.filter((c) => c._id === e.book);
               return (
                 <div key={i} className="row-buku-pinjam">
                   <div>
                     <li>{bookData[0].title}</li>
-                    <span>Kembali: 2021-01-07</span>
+                    <span>Kembali: {e.schedule.substring(0, 10)}</span>
                   </div>
                   <div>
                     <button className="button kembali" onClick={props.handleClickKembaliBuku}>Kembali</button>
