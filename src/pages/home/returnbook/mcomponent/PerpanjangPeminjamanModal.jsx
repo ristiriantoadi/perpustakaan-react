@@ -5,7 +5,7 @@ import { ServerURL } from '../../../../config/default.json';
 import { GET_DATA, POST_MEMBER } from '../../../../utils/types';
 import CloseIcon from '../../../../assets/icon/CloseIcon';
 
-export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminjaman,book,borrowed,denda }) {
+export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminjaman,book,borrowed,denda,member_id }) {
   const [formInputMember, setFormInputMember] = useState({});
   const modalCreate = useRef(null);
   const formInput = useRef(null);

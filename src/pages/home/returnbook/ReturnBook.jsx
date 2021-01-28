@@ -5,8 +5,8 @@ import { ServerURL } from '../../../config/default.json';
 import { GET_DATA, SEACRH_MEMBER } from '../../../utils/types';
 import ListMember from './mcomponent/ListMember';
 import './ReturnBook.css';
-import KembaliBukuModal from './mcomponent/KembaliBukuModal';
-import PerpanjangPeminjamanModal from './mcomponent/PerpanjangPeminjamanModal';
+// import KembaliBukuModal from './mcomponent/KembaliBukuModal';
+// import PerpanjangPeminjamanModal from './mcomponent/PerpanjangPeminjamanModal';
 
 export default function ReturnBook() {
   const [state, dispatch] = useStateGlobal();

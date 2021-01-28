@@ -87,19 +87,22 @@ export default function RowBukuPinjam(props) {
 
     return (
         <div className="row-buku-pinjam">
-            {hitungDenda()}
           <KembaliBukuModal
             // handleClickKembaliBuku={handleClickKembaliBuku}
             handleGetRefKembaliBuku={getRefFromChildKembaliBuku}
             book={props.bookData[0]}
             borrowed={props.b}
+            borrowedBooks={props.borrowedBooks}
             denda={hitungDenda()}
+            member_id={props.member_id}
           />
           <PerpanjangPeminjamanModal
             handleGetRefPerpanjangPeminjaman={getRefFromChildPerpanjangPeminjaman}
             book={props.bookData[0]}
             borrowed={props.b}
+            borrowedBooks={props.borrowedBooks}
             denda={hitungDenda()}
+            member_id={props.member_id}
           />
           <div>
             <li>{props.bookData[0].title}</li>
