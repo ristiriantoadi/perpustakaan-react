@@ -42,8 +42,8 @@
   padding: 20px;
   box-shadow: 0 0 5px #999;
   position: relative;
-  overflow: hidden;
-  width: 300px;
+  /* overflow: hidden; */
+  width: 500px;
 }
 .listMember > svg {
   position: absolute;
@@ -76,6 +76,7 @@
 .listMember > div:nth-child(2) > div > ol {
   list-style-type: upper-roman;
   margin-left: 40px;
+  list-style-position: inside;
 }
 .listMember > div:nth-child(2) > div > ol > li {
   margin-bottom: 10px;
@@ -172,4 +173,25 @@
   .modal > div {
     width: 90%;
   }
+}
+
+.row-buku-pinjam{
+  display:flex;
+  margin-bottom:10px;
+
+}
+
+.row-buku-pinjam button{
+  margin-bottom: 10px;
+}
+
+
+
+.listMember .content{
+  display: flex;
+  /* justify-content:  space-between; */
+}
+
+.listMember .content .info{
+  margin-left: 50px;
 }

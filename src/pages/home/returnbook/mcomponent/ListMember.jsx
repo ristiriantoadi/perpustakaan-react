@@ -67,24 +67,30 @@ export default function ListMember(props) {
 
   return (
     <div className='listMember'>
-      <div>
-        <div onClick={handleClickReturn}>
-          <BooksIcon height='30px' width='30px' color='#34d058' />
-          <p>kembali</p>
-        </div>
-        
-      </div>
-      <div>
+      <div className="content">
         <VeritifyUser height='70px' width='70px' color='#5a32a3' />
-        <div>
+        <div className="info">
           <span>{props.name}</span>
+          <span> | </span>
           <span>{props.kelas}</span>
-          
-          <span>{props.borrowedBooks.schedule.substring(0, 10)}</span>
+          {/* <span>{props.borrowedBooks.schedule.substring(0, 10)}</span> */}
           <ol>
             {props.borrowedBooks.books.map((e, i) => {
               const bookData = state.book.filter((c) => c._id === e);
-              return <li key={i}>{bookData[0].title}</li>;
+              return (
+                <div key={i} className="row-buku-pinjam">
+                  <div>
+                    <li>{bookData[0].title}</li>
+                    <span>Kembali: 2021-01-07</span>
+                  </div>
+                  <div>
+                    <button>Kembali</button>
+                    <button>Perpanjang</button>
+                  </div>
+                </div>
+              )
+              
+              
             })}
           </ol>
         </div>
