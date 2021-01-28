@@ -90,17 +90,23 @@ export default function BorrowBook() {
   }
 
   function handleChangeBook(e) {
+    console.log("handle change book called")
+    console.log(e.bookAvilable);
+    console.log(e.target.value)
+    const book = e.bookAvilable.filter(b=>{
+      if (b.title == e.target.value){
+        return b
+      }
+    })
+        
     setInputBook([
       ...inputBook,//what is e.target.id 
-      (inputBook[Number(e.target.id)] = e.target.list.innerText.substring(
-        0,
-        24
-      )),
+      (inputBook[Number(e.target.id)] = book[0]._id)
     ]);
     
     setNameBook([
       ...nameBook,
-      (nameBook[Number(e.target.id)] = e.target.value),
+      (nameBook[Number(e.target.id)] = book[0].title)
     ]);
   }
 
@@ -110,7 +116,8 @@ export default function BorrowBook() {
         return m
       }
     })
-    setInputMember(member[0]._id);
+    if(member.length != 0)
+      setInputMember(member[0]._id);
   }
 
   function handleChangeDay(e) {
@@ -195,6 +202,7 @@ function BookInput(props) {
   }, [state, book1, book2, book3, book4, book5]);
 
   function handleChange(e) {
+    e.bookAvilable = bookAvilable;
     props.ocChangeProps(e);
   }
 

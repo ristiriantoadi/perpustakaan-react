@@ -13,7 +13,6 @@ export default function ReturnBook() {
   useEffect(() => {
     document.title = 'Perpustakaan - Member';
     if (state.member !== null) {
-      // console.log(state.member)
       const rs = state.member.filter((e) => {//this should return the members that have borrowed book, but they put it in books
         return e.borrowedBooks.books.length !== 0;
       });
@@ -25,7 +24,7 @@ export default function ReturnBook() {
     dispatch({ type: SEACRH_MEMBER, loading: true });
     getData(`${ServerURL}/member`, localStorage.getItem('token')).then(
       (res) => {
-        console.log(res.data.member)
+        // console.log(res.data.member)
         const rs = res.data.member.filter((dt) =>
           dt.name.match(new RegExp(e.target.value, 'im'))
         );
