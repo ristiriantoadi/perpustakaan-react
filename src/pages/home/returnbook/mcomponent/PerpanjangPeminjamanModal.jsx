@@ -5,11 +5,12 @@ import { ServerURL } from '../../../../config/default.json';
 import { GET_DATA, POST_MEMBER } from '../../../../utils/types';
 import CloseIcon from '../../../../assets/icon/CloseIcon';
 
-export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminjaman,book,borrowed }) {
+export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminjaman,book,borrowed,denda }) {
   const [formInputMember, setFormInputMember] = useState({});
   const modalCreate = useRef(null);
   const formInput = useRef(null);
   const [state, dispatch] = useStateGlobal();
+  const [day, setDay] = useState();
 
   useEffect(() => {
     handleGetRefPerpanjangPeminjaman(modalCreate);
@@ -59,6 +60,10 @@ export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminj
     e.preventDefault();
   }
 
+  function handleChangeDay(e) {
+    setDay(Number(e.target.value) * 24);
+  }
+
   return (
     <div className='containerModalCreate modal' ref={modalCreate}>
       <div>
@@ -70,7 +75,17 @@ export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminj
             </div>
           </div>
           <span className="info">Jadwal Kembali: {borrowed.schedule.substring(0, 10)}</span>
-          <span className="info">Denda: Rp. 10.000</span>  
+          <span className="info">Denda: {denda}</span>  
+          <div className='info inputHari inputHari-perpanjang-peminjaman-modal'>
+            <input
+              type='number'
+              onChange={handleChangeDay}
+              min='1'
+              max='30'
+              required
+            />
+            <span>Hari</span>
+          </div>
           {/* <input
             autoComplete='off'
             required

@@ -204,3 +204,8 @@
 span.info{
   margin-bottom:5px;
 }
+
+.inputHari-perpanjang-peminjaman-modal{
+  display: flex!important;
+  justify-content: flex-start!important;
+}

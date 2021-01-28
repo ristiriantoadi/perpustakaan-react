@@ -77,25 +77,12 @@ export default function RowBukuPinjam(props) {
     }
 
     function hitungDenda(){
-        // console.log(Date(props.b.schedule.substring(0, 10)))
-        // console.log(Date.now())
         var currentDate = Date.now()
         var scheduleDate = Date.parse(props.b.schedule)
-        var diff =  Math.floor((currentDate-scheduleDate)/ 86400000); 
-        console.log(diff)
-        // console.log(props.b.schedule.substring(0, 10))
-        // const scheduleDate = new Date(props.b.schedule.substring(0, 10))
-        // const currentDate = new Date()
-        // console.log(datediff(currentDate-scheduleDate))
-        // console.log(date)
-        const scheduleYear = props.b.schedule.substring(0, 10).split("-")[0]
-        const scheduleMonth = props.b.schedule.substring(0, 10).split("-")[1]
-        const scheduleDay = props.b.schedule.substring(0, 10).split("-")[2]
-
-        // const date = new Date()
-        // const currentDate = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
-        // console.log(currentDate)
-
+        var diff = Math.floor((currentDate-scheduleDate)/ 86400000); 
+        if(diff>0)
+            return 1000*diff
+        return 0;
     }
 
     return (
@@ -106,11 +93,13 @@ export default function RowBukuPinjam(props) {
             handleGetRefKembaliBuku={getRefFromChildKembaliBuku}
             book={props.bookData[0]}
             borrowed={props.b}
+            denda={hitungDenda()}
           />
           <PerpanjangPeminjamanModal
             handleGetRefPerpanjangPeminjaman={getRefFromChildPerpanjangPeminjaman}
             book={props.bookData[0]}
             borrowed={props.b}
+            denda={hitungDenda()}
           />
           <div>
             <li>{props.bookData[0].title}</li>
