@@ -84,8 +84,8 @@ export default function ListMember(props) {
                     <span>Kembali: 2021-01-07</span>
                   </div>
                   <div>
-                    <button onClick={props.handleClickKembaliBuku}>Kembali</button>
-                    <button onClick={props.handleClickPerpanjangPeminjaman}>Perpanjang</button>
+                    <button className="button kembali" onClick={props.handleClickKembaliBuku}>Kembali</button>
+                    <button className="button perpanjang" onClick={props.handleClickPerpanjangPeminjaman}>Perpanjang</button>
                   </div>
                 </div>
               )

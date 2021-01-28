@@ -177,6 +177,7 @@
 
 .row-buku-pinjam{
   display:flex;
+  flex-direction: column;
   margin-bottom:10px;
 
 }
@@ -189,9 +190,13 @@
 
 .listMember .content{
   display: flex;
-  /* justify-content:  space-between; */
+  justify-content:  flex-start;
 }
 
 .listMember .content .info{
   margin-left: 50px;
+}
+
+.button{
+  margin-right:10px;
 }
