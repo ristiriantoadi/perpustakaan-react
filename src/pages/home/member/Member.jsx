@@ -19,6 +19,13 @@ export default function Member() {
   }, []);
 
   function getRefFromChildCreateMember(e) {
+
+    //this thing get called whenever the page load
+    console.log("get ref from child create member called")
+    
+    //e.current is div.containerModalCreate.modal
+    //this is the root div in the return function of CreateMemberModal
+    console.log(e)
     if (e.current) {
       setRefFromModlaCrate(e);
     }
