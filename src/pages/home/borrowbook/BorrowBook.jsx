@@ -90,24 +90,23 @@ export default function BorrowBook() {
   }
 
   function handleChangeBook(e) {
-    console.log("handle change book called")
-    console.log(e.bookAvilable);
-    console.log(e.target.value)
+
+    //check if book is available for borrowing
     const book = e.bookAvilable.filter(b=>{
       if (b.title == e.target.value){
         return b
       }
     })
-        
+
     setInputBook([
       ...inputBook,//what is e.target.id 
       (inputBook[Number(e.target.id)] = book[0]._id)
     ]);
-    
     setNameBook([
       ...nameBook,
       (nameBook[Number(e.target.id)] = book[0].title)
     ]);
+    
   }
 
   function handleOnchengeInputMember(e) {
