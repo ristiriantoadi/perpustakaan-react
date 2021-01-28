@@ -9,6 +9,7 @@ import { ServerURL } from '../../../../config/default.json';
 import { GET_DATA, UPDATE_MEMBER } from '../../../../utils/types';
 import KembaliBukuModal from './KembaliBukuModal';
 import PerpanjangPeminjamanModal from './PerpanjangPeminjamanModal';
+import RowBukuPinjam from './RowBukuPinjam';
 
 export default function ListMember(props) {
   const [state, dispatch] = useStateGlobal();
@@ -133,27 +134,31 @@ export default function ListMember(props) {
               console.log("book data")
               console.log(bookData[0])
               return (
-                <div key={i} className="row-buku-pinjam">
-                  <KembaliBukuModal
-                    // handleClickKembaliBuku={handleClickKembaliBuku}
-                    handleGetRefKembaliBuku={getRefFromChildKembaliBuku}
-                    book={bookData[0]}
-                    borrowed={b}
-                  />
-                  <PerpanjangPeminjamanModal
-                    handleGetRefPerpanjangPeminjaman={getRefFromChildPerpanjangPeminjaman}
-                    book={bookData[0]}
-                    borrowed={b}
-                  />
-                  <div>
-                    <li>{bookData[0].title}</li>
-                    <span>Kembali: {b.schedule.substring(0, 10)}</span>
-                  </div>
-                  <div>
-                    <button className="button kembali" onClick={handleClickKembaliBuku}>Kembali</button>
-                    <button className="button perpanjang" onClick={handleClickPerpanjangPeminjaman}>Perpanjang</button>
-                  </div>
-                </div>
+                // <div key={i} className="row-buku-pinjam">
+                //   <KembaliBukuModal
+                //     // handleClickKembaliBuku={handleClickKembaliBuku}
+                //     handleGetRefKembaliBuku={getRefFromChildKembaliBuku}
+                //     book={bookData[0]}
+                //     borrowed={b}
+                //   />
+                //   <PerpanjangPeminjamanModal
+                //     handleGetRefPerpanjangPeminjaman={getRefFromChildPerpanjangPeminjaman}
+                //     book={bookData[0]}
+                //     borrowed={b}
+                //   />
+                //   <div>
+                //     <li>{bookData[0].title}</li>
+                //     <span>Kembali: {b.schedule.substring(0, 10)}</span>
+                //   </div>
+                //   <div>
+                //     <button className="button kembali" onClick={handleClickKembaliBuku}>Kembali</button>
+                //     <button className="button perpanjang" onClick={handleClickPerpanjangPeminjaman}>Perpanjang</button>
+                //   </div>
+                // </div>
+                <RowBukuPinjam
+                  bookData={bookData}
+                  b={b}
+                ></RowBukuPinjam>
               )
               
               
