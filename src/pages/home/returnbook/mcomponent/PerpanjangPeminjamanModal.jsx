@@ -24,7 +24,7 @@ export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminj
     setFormInputMember({ ...formInputMember, [e.target.name]: e.target.value });
   }
 
-  function handleSubmitMemberCreate(e) {
+  function handleSubmitPerpanjangPeminjaman(e) {
     if (state.loading !== true) {
       const { name, kelas } = formInputMember;
       const newStateFprmCreateMember = {
@@ -32,6 +32,9 @@ export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminj
         kelas,
       };
       dispatch({ type: POST_MEMBER, loading: true });
+      
+      const date = new Date(Date.now() + 3600 * 1000 * day);
+    
       postData(
         `${ServerURL}/member`,
         newStateFprmCreateMember,
@@ -67,7 +70,7 @@ export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminj
   return (
     <div className='containerModalCreate modal' ref={modalCreate}>
       <div>
-        <form onSubmit={handleSubmitMemberCreate} ref={formInput}>
+        <form onSubmit={handleSubmitPerpanjangPeminjaman} ref={formInput}>
           <div>
             <span>Perpanjang Peminjaman ({book.title})</span>
             <div onClick={closeModalCrete}>
