@@ -21,7 +21,7 @@ export default function BorrowBook() {
   useEffect(() => {
     if (state.member !== null && state.member !== undefined) {
       const mmbrNtBr = state.member.filter((e) => {//this is finding member that doesnt have borrowed book
-        return e.borrowedBooks.length === 0;
+        return e.borrowedBooks.length < 5;//maksimal pinjam buku lima kali
       });
       setMemberNotBorrowBook(mmbrNtBr);
     }
@@ -101,8 +101,20 @@ export default function BorrowBook() {
   }
 
   function handleClickPlus() {
-    if (count.length <= 4) {//maksimal cuma bisa pinjam 5 buku (i.e. klik tombol tambah yang merah itu cuma bisa sampai lima kali)
-      setCount([...count, count.length + 1]);
+    //get member amount of borrowed books
+    console.log("handle click plus called")
+    if(inputMember !== ''){
+      const member = state.member.filter(m=>{
+        if(m._id === inputMember){
+          return m
+        }
+      })
+      // console.log(member)
+      const amountOfBorrowedBook = member[0].borrowedBooks.length
+      if (count.length <= 4-amountOfBorrowedBook) {//maksimal cuma bisa pinjam 5 buku (i.e. klik tombol tambah yang merah itu cuma bisa sampai lima kali pinjam)
+        setCount([...count, count.length + 1]);
+        console.log("count berubah");
+      }
     }
   }
 
@@ -143,6 +155,23 @@ export default function BorrowBook() {
     setDay(Number(e.target.value) * 24);
   }
 
+  function generateBookInput(){
+    console.log("generate book input called")
+    var bookInput = [];
+    for(var i=0;i<count.length;i++){
+      bookInput.push(
+        <BookInput
+          ocChangeProps={handleChangeBook}
+          key={i}
+          name={`inputBook${i}`}
+          id={i}
+          bookSelect={nameBook}
+        />
+      )
+    }
+    return bookInput;
+  }
+
   return (
     <section className='borrowbook content'>
       <form onSubmit={handleSubmit} ref={formRef}>
@@ -170,7 +199,21 @@ export default function BorrowBook() {
           <button type='button' onClick={handleClickPlus}>
             Tambah
           </button>
-          {count.map((e, i) => {
+          {
+            generateBookInput()
+            // for(var i=0;i<count.length;i++){
+            //   return(
+            //     <BookInput
+            //       ocChangeProps={handleChangeBook}
+            //       key={i}
+            //       name={`inputBook${i}`}
+            //       id={i}
+            //       bookSelect={nameBook}
+            //     />  
+            //   )
+            // }
+          }
+          {/* {count.map((e, i) => {
             return (
               <BookInput
                 ocChangeProps={handleChangeBook}
@@ -180,7 +223,7 @@ export default function BorrowBook() {
                 bookSelect={nameBook}
               />
             );
-          })}
+          })} */}
           <div className='inputHari'>
             <input
               type='number'
@@ -216,8 +259,8 @@ function BookInput(props) {
           e.title !== book5
         );
       });
-      console.log("book available: ")
-      console.log(bookAvilable);
+      // console.log("book available: ")
+      // console.log(bookAvilable);
       setBookAvilable(bookAvilable);
     }
   }, [state, book1, book2, book3, book4, book5]);
