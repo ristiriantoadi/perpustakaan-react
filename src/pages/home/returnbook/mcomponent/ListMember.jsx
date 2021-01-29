@@ -131,33 +131,14 @@ export default function ListMember(props) {
           <ol>
             {props.borrowedBooks.map((b, i) => {
               const bookData = state.book.filter((c) => c._id === b.book);
-              console.log("book data")
-              console.log(bookData[0])
+              // console.log("book data")
+              // console.log(bookData[0])
               return (
-                // <div key={i} className="row-buku-pinjam">
-                //   <KembaliBukuModal
-                //     // handleClickKembaliBuku={handleClickKembaliBuku}
-                //     handleGetRefKembaliBuku={getRefFromChildKembaliBuku}
-                //     book={bookData[0]}
-                //     borrowed={b}
-                //   />
-                //   <PerpanjangPeminjamanModal
-                //     handleGetRefPerpanjangPeminjaman={getRefFromChildPerpanjangPeminjaman}
-                //     book={bookData[0]}
-                //     borrowed={b}
-                //   />
-                //   <div>
-                //     <li>{bookData[0].title}</li>
-                //     <span>Kembali: {b.schedule.substring(0, 10)}</span>
-                //   </div>
-                //   <div>
-                //     <button className="button kembali" onClick={handleClickKembaliBuku}>Kembali</button>
-                //     <button className="button perpanjang" onClick={handleClickPerpanjangPeminjaman}>Perpanjang</button>
-                //   </div>
-                // </div>
-                <RowBukuPinjam
+                <RowBukuPinjam key={i}
                   bookData={bookData}
-                  b={b}
+                  b={b}//b is a single instance of a borrow record
+                  borrowedBooks={props.borrowedBooks}
+                  member_id = {props.id}
                 ></RowBukuPinjam>
               )
               

@@ -209,3 +209,7 @@ span.info{
   display: flex!important;
   justify-content: flex-start!important;
 }
+
+.kembali-buku-modal{
+  z-index: 1!important;
+}

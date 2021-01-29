@@ -5,7 +5,7 @@ import { ServerURL } from '../../../../config/default.json';
 import { GET_DATA, POST_MEMBER } from '../../../../utils/types';
 import CloseIcon from '../../../../assets/icon/CloseIcon';
 
-export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminjaman,book,borrowed,denda }) {
+export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminjaman,book,borrowed,denda,member_id }) {
   const [formInputMember, setFormInputMember] = useState({});
   const modalCreate = useRef(null);
   const formInput = useRef(null);
@@ -25,40 +25,50 @@ export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminj
   }
 
   function handleSubmitPerpanjangPeminjaman(e) {
-    if (state.loading !== true) {
-      const { name, kelas } = formInputMember;
-      const newStateFprmCreateMember = {
-        name,
-        kelas,
-      };
-      dispatch({ type: POST_MEMBER, loading: true });
+    if (window.confirm('return books')) {
+      dispatch({ type: UPDATE_MEMBER, loading: true });
       
+      //ubah schedule entri peminjaman yang mau diperpanjang dari list borrowedBooks
       const date = new Date(Date.now() + 3600 * 1000 * day);
-    
-      postData(
-        `${ServerURL}/member`,
-        newStateFprmCreateMember,
+      borrowedBooks = borrowedBooks.map(borrowedBook=>{
+        if(borrowedBook.book == borrowed.book)
+          borrowedBook.schedule = date
+      })
+
+      // console.log("borrowed books")
+      // console.log(borrowedBooks)
+
+      //update record borrowedBooks member
+      const data = {
+        borrowedBooks
+      }
+      const changeMember = await patchData(
+        `${ServerURL}/member/${member_id}`,
+        data,
         localStorage.getItem('token')
-      )
-        .then(() => {
-          getData(`${ServerURL}/member`, localStorage.getItem('token')).then(
-            (response) => {
-              dispatch({
-                type: GET_DATA,
-                book: state.book,
-                member: response.data.member,
-                loading: false,
-              });
-              formInput.current.childNodes.forEach((e) => {
-                e.value = null;
-              });
-            }
-          );
-          modalCreate.current.style.visibility = 'hidden';
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      );
+
+      //update data peminjaman buku
+      if (changeMember) {
+        const getDataMember = await getData(
+          `${ServerURL}/member`,
+          localStorage.getItem('token')
+        );
+        const getDataBook = await getData(
+          `${ServerURL}/book`,
+          localStorage.getItem('token')
+        );
+        if (getDataMember && getDataBook) {
+          dispatch({
+            type: GET_DATA,
+            book: getDataBook.data.book,
+            member: getDataMember.data.member,
+            loading: false,
+          });
+          alert('success');
+          closeModalCrete();
+        }
+      }
     }
     e.preventDefault();
   }

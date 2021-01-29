@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
-import { getData, postData } from '../../../../library/AxiosLib';
+// import { getData, postData } from '../../../../library/AxiosLib';
 import { useStateGlobal } from '../../../../utils/GlobalState';
 import { ServerURL } from '../../../../config/default.json';
-import { GET_DATA, POST_MEMBER } from '../../../../utils/types';
+import { GET_DATA, UPDATE_MEMBER } from '../../../../utils/types';
 import CloseIcon from '../../../../assets/icon/CloseIcon';
+import { patchData, getData } from '../../../../library/AxiosLib';
+import { useHistory } from 'react-router-dom';
 
-export default function KembaliBukuModal({ handleGetRefKembaliBuku,book,borrowed,denda }) {
+export default function KembaliBukuModal({ handleGetRefKembaliBuku,book,borrowed,denda,borrowedBooks,member_id }) {
   const [formInputMember, setFormInputMember] = useState({});
   const modalCreate = useRef(null);
   const formInput = useRef(null);
   const [state, dispatch] = useStateGlobal();
+  const history = useHistory();
 
   useEffect(() => {
     handleGetRefKembaliBuku(modalCreate);
@@ -23,45 +26,68 @@ export default function KembaliBukuModal({ handleGetRefKembaliBuku,book,borrowed
     setFormInputMember({ ...formInputMember, [e.target.name]: e.target.value });
   }
 
-  function handleSubmitKembaliBuku(e) {
-    if (state.loading !== true) {
-      const { name, kelas } = formInputMember;
-      const newStateFprmCreateMember = {
-        name,
-        kelas,
-      };
-      dispatch({ type: POST_MEMBER, loading: true });
-      postData(
-        `${ServerURL}/member`,
-        newStateFprmCreateMember,
+  async function handleSubmitKembaliBuku(e) {
+    if (window.confirm('return books')) {
+      dispatch({ type: UPDATE_MEMBER, loading: true });
+      
+      //when the book return, add 1 for the number of available book
+      const bookData = state.book.filter((c)=>c._id === borrowed.book)
+      // console.log("book data")
+      // console.log(bookData[0])
+      const availableChange = bookData[0].available + 1;
+        await patchData(
+          `${ServerURL}/book/${borrowed.book}`,
+          { available: availableChange },
+          localStorage.getItem('token')
+        );
+
+      //remove entri peminjaman yang mau dikembalikan dari list borrowedBooks
+      borrowedBooks = borrowedBooks.filter(borrowedBook=>{
+        if(borrowedBook.book != borrowed.book)
+          return borrowedBook
+      })
+
+      // console.log("borrowed books")
+      // console.log(borrowedBooks)
+
+      //update record borrowedBooks member
+      const data = {
+        borrowedBooks
+      }
+      const changeMember = await patchData(
+        `${ServerURL}/member/${member_id}`,
+        data,
         localStorage.getItem('token')
-      )
-        .then(() => {
-          getData(`${ServerURL}/member`, localStorage.getItem('token')).then(
-            (response) => {
-              dispatch({
-                type: GET_DATA,
-                book: state.book,
-                member: response.data.member,
-                loading: false,
-              });
-              formInput.current.childNodes.forEach((e) => {
-                e.value = null;
-              });
-            }
-          );
-          modalCreate.current.style.visibility = 'hidden';
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      );
+
+      //update data peminjaman buku
+      if (changeMember) {
+        const getDataMember = await getData(
+          `${ServerURL}/member`,
+          localStorage.getItem('token')
+        );
+        const getDataBook = await getData(
+          `${ServerURL}/book`,
+          localStorage.getItem('token')
+        );
+        if (getDataMember && getDataBook) {
+          dispatch({
+            type: GET_DATA,
+            book: getDataBook.data.book,
+            member: getDataMember.data.member,
+            loading: false,
+          });
+          alert('success');
+          closeModalCrete();
+        }
+      }
     }
     e.preventDefault();
   }
 
   return (
-    <div className='containerModalCreate modal' ref={modalCreate}>
-      <div>
+    <div className='containerModalCreate modal kembali-buku-modal' ref={modalCreate}>
+      <div className="kembali-buku-modal">
         <form onSubmit={handleSubmitKembaliBuku} ref={formInput}>
           <div>
             <span>Kembali Buku ({book.title})</span>
