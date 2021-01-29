@@ -20,6 +20,7 @@ export default function Register() {
     if (!loading) {
       setLoading(true);
       if (formRegister.password === formRegister.verify) {
+        console.log(formRegister);
         postData(`${ServerURL}/user`, formRegister)
           .then(function () {
             setLoading(false);
