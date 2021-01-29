@@ -19,7 +19,8 @@ export default function KembaliBukuModal({ handleGetRefKembaliBuku,book,borrowed
   }, [handleGetRefKembaliBuku]);
 
   function closeModalCrete() {
-    modalCreate.current.style.visibility = 'hidden';
+    if(modalCreate.current)
+      modalCreate.current.style.visibility = 'hidden';
   }
 
   function handleChngeCreateMember(e) {

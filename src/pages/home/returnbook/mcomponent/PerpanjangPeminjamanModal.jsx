@@ -17,7 +17,8 @@ export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminj
   }, [handleGetRefPerpanjangPeminjaman]);
 
   function closeModalCrete() {
-    modalCreate.current.style.visibility = 'hidden';
+    if(modalCreate.current)
+      modalCreate.current.style.visibility = 'hidden';
   }
 
   function handleChngeCreateMember(e) {
