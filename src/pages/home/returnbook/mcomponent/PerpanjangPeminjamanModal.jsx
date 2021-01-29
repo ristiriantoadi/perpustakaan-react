@@ -9,6 +9,7 @@ export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminj
   const modalCreate = useRef(null);
   const formInput = useRef(null);
   const [day, setDay] = useState();
+  const [state, dispatch] = useStateGlobal();
 
   useEffect(() => {
     handleGetRefPerpanjangPeminjaman(modalCreate);

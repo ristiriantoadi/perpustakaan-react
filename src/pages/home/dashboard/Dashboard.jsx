@@ -53,7 +53,7 @@ export default function Dashboard() {
           <span>{borrower}</span>
         </div>
       </div>
-      <div>
+      {/* <div>
         <span>Peminjam Buku</span>
         {dataChart.length !== 0 && (
           <ReactApexChart
@@ -80,7 +80,7 @@ export default function Dashboard() {
             height={350}
           />
         )}
-      </div>
+      </div> */}
     </section>
   );
 }

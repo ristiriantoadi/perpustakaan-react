@@ -1,9 +1,12 @@
 import IdCardIcon from '../../../../assets/icon/IdCardIcon';
 import VeritifyUser from '../../../../assets/icon/VeritifyUser';
 import RowBukuPinjam from './RowBukuPinjam';
+import { useStateGlobal } from '../../../../utils/GlobalState';
 
 export default function ListMember(props) {
   
+  const [state, dispatch] = useStateGlobal();
+
   return (
     <div className='listMember'>
       <div className="content">
