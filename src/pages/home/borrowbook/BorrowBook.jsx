@@ -8,7 +8,7 @@ import './BorrowBook.css';
 
 export default function BorrowBook() {
   const [memberNotBorrowBook, setMemberNotBorrowBook] = useState(null);
-  const [count, setCount] = useState([1]);
+  const [count, setCount] = useState([]);
   const [inputBook, setInputBook] = useState([]);
   const [nameBook, setNameBook] = useState([]);
   const [inputMember, setInputMember] = useState('');
@@ -33,7 +33,13 @@ export default function BorrowBook() {
     const date = new Date(Date.now() + 3600 * 1000 * day);
 
     // console.log(inputBook)
-    var borrowedBooks = [];
+    
+    //find member borrowedBooks
+    const member = state.member.filter(m=>{
+      if(m._id === inputMember)
+        return m
+    })[0]
+    var borrowedBooks = member.borrowedBooks;
     inputBook.forEach(b=>{
       borrowedBooks.push({
         book:b,
@@ -161,6 +167,7 @@ export default function BorrowBook() {
     for(var i=0;i<count.length;i++){
       bookInput.push(
         <BookInput
+          memberId={inputMember}
           ocChangeProps={handleChangeBook}
           key={i}
           name={`inputBook${i}`}
@@ -249,18 +256,56 @@ function BookInput(props) {
 
   useEffect(() => {
     if (state.book !== null && state.book !== undefined) {
+      
       const bookAvilable = state.book.filter((e) => {
-        return (
-          e.available.books !== 0 &&//shouldnt this just e.available !== 0
-          e.title !== book1 &&
-          e.title !== book2 &&
-          e.title !== book3 &&
-          e.title !== book4 &&
-          e.title !== book5
-        );
+        var available=true;
+        // console.log("props")
+        // console.log(props.memberId)
+        if(props.memberId){
+          const member = state.member.filter(m=>{
+            if(m._id === props.memberId){
+              return m
+            }
+          })
+          // console.log("member")
+          // console.log(member)
+          const memberBorrowedBookIds = member[0].borrowedBooks.map(b=>{
+            return b.book
+          })
+          memberBorrowedBookIds.forEach(id=>{
+            console.log("book id: "+e._id)
+            console.log("member borrowed book id: "+id)
+            if (e._id === id){
+              available=false;
+              return;
+            }
+          })
+
+          if(available == false){
+            return;
+          }
+
+          if(e.available !== 0 &&
+            e.title !== book1 &&
+            e.title !== book2 &&
+            e.title !== book3 &&
+            e.title !== book4 &&
+            e.title !== book5  
+          ){
+            return e
+          }
+        }
+        // return (
+        //   e.available.books !== 0 &&//shouldnt this just e.available !== 0
+        //   e.title !== book1 &&
+        //   e.title !== book2 &&
+        //   e.title !== book3 &&
+        //   e.title !== book4 &&
+        //   e.title !== book5
+        // );
       });
-      // console.log("book available: ")
-      // console.log(bookAvilable);
+      console.log("book available: ")
+      console.log(bookAvilable);
       setBookAvilable(bookAvilable);
     }
   }, [state, book1, book2, book3, book4, book5]);
