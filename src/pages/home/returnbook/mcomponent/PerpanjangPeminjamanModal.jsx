@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { getData, postData } from '../../../../library/AxiosLib';
+import { patchData, getData } from '../../../../library/AxiosLib';
 import { useStateGlobal } from '../../../../utils/GlobalState';
 import { ServerURL } from '../../../../config/default.json';
-import { GET_DATA, POST_MEMBER } from '../../../../utils/types';
+import { GET_DATA, UPDATE_MEMBER } from '../../../../utils/types';
 import CloseIcon from '../../../../assets/icon/CloseIcon';
 
-export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminjaman,book,borrowed,denda,member_id }) {
+export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminjaman,book,borrowed,borrowedBooks,denda,member_id }) {
   const [formInputMember, setFormInputMember] = useState({});
   const modalCreate = useRef(null);
   const formInput = useRef(null);
@@ -24,15 +24,19 @@ export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminj
     setFormInputMember({ ...formInputMember, [e.target.name]: e.target.value });
   }
 
-  function handleSubmitPerpanjangPeminjaman(e) {
-    if (window.confirm('return books')) {
+  async function handleSubmitPerpanjangPeminjaman(e) {
+    if (window.confirm('perpanjang peminjaman')) {
       dispatch({ type: UPDATE_MEMBER, loading: true });
       
       //ubah schedule entri peminjaman yang mau diperpanjang dari list borrowedBooks
-      const date = new Date(Date.now() + 3600 * 1000 * day);
+      const currentScheduleDate=Date.parse(borrowed.schedule);
+      const newScheduledate = new Date(currentScheduleDate + 3600 * 1000 * day);    
+      // console.log("new schedule date")
+      // console.log(newScheduledate)
       borrowedBooks = borrowedBooks.map(borrowedBook=>{
         if(borrowedBook.book == borrowed.book)
-          borrowedBook.schedule = date
+          borrowedBook.schedule = newScheduledate
+        return borrowedBook
       })
 
       // console.log("borrowed books")
@@ -74,7 +78,7 @@ export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminj
   }
 
   function handleChangeDay(e) {
-    setDay(Number(e.target.value) * 24);
+    setDay(Number(e.target.value) * 24);//convert from days to hours
   }
 
   return (

@@ -15,6 +15,13 @@ export default function RowBukuPinjam(props) {
     const [refFromModlaPerpanjangPeminjaman, setRefFromModlaPerpanjangPeminjaman] = useState(null);
     const [refFromModlaKembaliBuku, setRefFromModlaKembaliBuku] = useState(null);
 
+    // useEffect(() => {
+    //   document.title = 'Perpustakaan - Member';
+    //   console.log("row buku pinjam called")
+    //   console.log(typeof props.b.schedule)
+      
+    // }, [state]);
+
     function getRefFromChildPerpanjangPeminjaman(e) {
 
         //this thing get called whenever the page load
@@ -85,6 +92,23 @@ export default function RowBukuPinjam(props) {
         return 0;
     }
 
+    function convertScheduleToString(){
+      // console.log("convert schedule to string called")
+      // console.log(typeof props.b.schedule)
+      if(typeof props.b.schedule == "object" && props.b.schedule !== null){
+        var getYear = props.b.schedule.getFullYear();
+        var getMonth = props.b.schedule.getMonth()+1;
+        if(getMonth<10){
+          getMonth=`0${getMonth}`
+        }
+        var getDate = props.b.schedule.getDate();
+        if(getDate<10){
+          getDate=`0${getDate}`
+        }
+        props.b.schedule = `${getYear}-${getMonth}-${getDate}`
+      }
+    }
+
     return (
         <div className="row-buku-pinjam">
           <KembaliBukuModal
@@ -106,6 +130,9 @@ export default function RowBukuPinjam(props) {
           />
           <div>
             <li>{props.bookData[0].title}</li>
+            {/* {console.log("props b schedule: ")} */}
+            {/* {console.log(typeof props.b.schedule)} */}
+            {convertScheduleToString()}
             <span>Kembali: {props.b.schedule.substring(0, 10)}</span>
           </div>
           <div>

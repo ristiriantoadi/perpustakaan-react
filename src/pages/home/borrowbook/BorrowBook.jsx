@@ -111,7 +111,7 @@ export default function BorrowBook() {
     // console.log(e.bookAvilable);
     console.log(e.target.value)
     const book = e.bookAvilable.filter(b=>{
-      if (b.title == e.target.value){
+      if (b.title === e.target.value){
         return b
       }
     })
@@ -131,7 +131,7 @@ export default function BorrowBook() {
 
   function handleOnchengeInputMember(e) {
     const member = memberNotBorrowBook.filter(m=>{
-      if (m.name == e.target.value){
+      if (m.name === e.target.value){
         return m
       }
     })
