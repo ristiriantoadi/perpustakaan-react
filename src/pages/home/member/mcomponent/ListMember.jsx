@@ -81,7 +81,6 @@ export default function ListMember(props) {
         <div>
           <span>{props.name}</span>
           <span>{props.class}</span>
-          {/* <span>{props.borrowedBooks.books.length}</span> */}
           <span>{props.borrowedBooks.length}</span>
         </div>
       </div>

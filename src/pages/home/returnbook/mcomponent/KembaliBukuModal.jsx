@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-// import { getData, postData } from '../../../../library/AxiosLib';
 import { useStateGlobal } from '../../../../utils/GlobalState';
 import { ServerURL } from '../../../../config/default.json';
 import { GET_DATA, UPDATE_MEMBER } from '../../../../utils/types';
@@ -8,12 +7,10 @@ import { patchData, getData } from '../../../../library/AxiosLib';
 import { useHistory } from 'react-router-dom';
 
 export default function KembaliBukuModal({ handleGetRefKembaliBuku,book,borrowed,denda,borrowedBooks,member_id }) {
-  const [formInputMember, setFormInputMember] = useState({});
   const modalCreate = useRef(null);
   const formInput = useRef(null);
   const [state, dispatch] = useStateGlobal();
-  const history = useHistory();
-
+  
   useEffect(() => {
     handleGetRefKembaliBuku(modalCreate);
   }, [handleGetRefKembaliBuku]);
@@ -23,18 +20,13 @@ export default function KembaliBukuModal({ handleGetRefKembaliBuku,book,borrowed
       modalCreate.current.style.visibility = 'hidden';
   }
 
-  function handleChngeCreateMember(e) {
-    setFormInputMember({ ...formInputMember, [e.target.name]: e.target.value });
-  }
-
   async function handleSubmitKembaliBuku(e) {
     if (window.confirm('return books')) {
       dispatch({ type: UPDATE_MEMBER, loading: true });
       
+      //update data buku setelah dikembalikan
       //when the book return, add 1 for the number of available book
       const bookData = state.book.filter((c)=>c._id === borrowed.book)
-      // console.log("book data")
-      // console.log(bookData[0])
       const availableChange = bookData[0].available + 1;
         await patchData(
           `${ServerURL}/book/${borrowed.book}`,
@@ -42,26 +34,19 @@ export default function KembaliBukuModal({ handleGetRefKembaliBuku,book,borrowed
           localStorage.getItem('token')
         );
 
+      //update data member
       //remove entri peminjaman yang mau dikembalikan dari list borrowedBooks
       borrowedBooks = borrowedBooks.filter(borrowedBook=>{
         if(borrowedBook.book != borrowed.book)
           return borrowedBook
       })
-
-      // console.log("borrowed books")
-      // console.log(borrowedBooks)
-
-      //update record borrowedBooks member
-      const data = {
-        borrowedBooks
-      }
       const changeMember = await patchData(
         `${ServerURL}/member/${member_id}`,
-        data,
+        {borrowedBooks},
         localStorage.getItem('token')
       );
 
-      //update data peminjaman buku
+      //update data setelah pengembalian selesai
       if (changeMember) {
         const getDataMember = await getData(
           `${ServerURL}/member`,
@@ -98,22 +83,6 @@ export default function KembaliBukuModal({ handleGetRefKembaliBuku,book,borrowed
           </div>
           <span className="info">Jadwal Kembali: {borrowed.schedule.substring(0, 10)}</span>
           <span className="info">Denda: {denda}</span>  
-          {/* <input
-            autoComplete='off'
-            required
-            onChange={handleChngeCreateMember}
-            type='text'
-            name='name'
-            placeholder='Nama'
-          />
-          <input
-            autoComplete='off'
-            required
-            onChange={handleChngeCreateMember}
-            type='text'
-            name='kelas'
-            placeholder='kelas'
-          /> */}
           <button type='submit'>Kembali Buku</button>
         </form>
       </div>

@@ -46,7 +46,6 @@ export default function UpdateBookModal(props) {
         newStateFprmUpdateBook,
         localStorage.getItem('token')
       ).then((data) => {
-        console.log(data.data)
         getData(`${ServerURL}/book`, localStorage.getItem('token')).then(
           (response) => {
             dispatch({

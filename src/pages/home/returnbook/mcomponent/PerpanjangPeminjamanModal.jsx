@@ -6,10 +6,8 @@ import { GET_DATA, UPDATE_MEMBER } from '../../../../utils/types';
 import CloseIcon from '../../../../assets/icon/CloseIcon';
 
 export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminjaman,book,borrowed,borrowedBooks,denda,member_id }) {
-  const [formInputMember, setFormInputMember] = useState({});
   const modalCreate = useRef(null);
   const formInput = useRef(null);
-  const [state, dispatch] = useStateGlobal();
   const [day, setDay] = useState();
 
   useEffect(() => {
@@ -21,10 +19,6 @@ export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminj
       modalCreate.current.style.visibility = 'hidden';
   }
 
-  function handleChngeCreateMember(e) {
-    setFormInputMember({ ...formInputMember, [e.target.name]: e.target.value });
-  }
-
   async function handleSubmitPerpanjangPeminjaman(e) {
     if (window.confirm('perpanjang peminjaman')) {
       dispatch({ type: UPDATE_MEMBER, loading: true });
@@ -32,16 +26,11 @@ export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminj
       //ubah schedule entri peminjaman yang mau diperpanjang dari list borrowedBooks
       const currentScheduleDate=Date.parse(borrowed.schedule);
       const newScheduledate = new Date(currentScheduleDate + 3600 * 1000 * day);    
-      // console.log("new schedule date")
-      // console.log(newScheduledate)
       borrowedBooks = borrowedBooks.map(borrowedBook=>{
         if(borrowedBook.book == borrowed.book)
           borrowedBook.schedule = newScheduledate
         return borrowedBook
       })
-
-      // console.log("borrowed books")
-      // console.log(borrowedBooks)
 
       //update record borrowedBooks member
       const data = {
@@ -104,22 +93,6 @@ export default function PerpanjangPeminjamanModal({ handleGetRefPerpanjangPeminj
             />
             <span>Hari</span>
           </div>
-          {/* <input
-            autoComplete='off'
-            required
-            onChange={handleChngeCreateMember}
-            type='text'
-            name='name'
-            placeholder='Nama'
-          />
-          <input
-            autoComplete='off'
-            required
-            onChange={handleChngeCreateMember}
-            type='text'
-            name='kelas'
-            placeholder='kelas'
-          /> */}
           <button type='submit'>Submit</button>
         </form>
       </div>

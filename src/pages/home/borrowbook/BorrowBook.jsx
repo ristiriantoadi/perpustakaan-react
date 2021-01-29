@@ -17,11 +17,14 @@ export default function BorrowBook() {
   const [state, dispatch] = useStateGlobal();
 
   const history = useHistory();
+  const MAX_BORROW = 5
 
   useEffect(() => {
     if (state.member !== null && state.member !== undefined) {
-      const mmbrNtBr = state.member.filter((e) => {//this is finding member that doesnt have borrowed book
-        return e.borrowedBooks.length < 5;//maksimal pinjam buku lima kali
+      //find members that can still borrow books
+      //i.e. members that have less than five borrowed books
+      const mmbrNtBr = state.member.filter((e) => {
+        return e.borrowedBooks.length < MAX_BORROW;
       });
       setMemberNotBorrowBook(mmbrNtBr);
     }
@@ -30,60 +33,48 @@ export default function BorrowBook() {
   async function handleSubmit(e) {
     e.preventDefault();
     dispatch({ type: UPDATE_MEMBER, loading: true });
-    const date = new Date(Date.now() + 3600 * 1000 * day);
-
-    // console.log(inputBook)
     
-    //find member borrowedBooks
-    const member = state.member.filter(m=>{
-      if(m._id === inputMember)
-        return m
-    })[0]
-    var borrowedBooks = member.borrowedBooks;
-    inputBook.forEach(b=>{
-      borrowedBooks.push({
-        book:b,
-        schedule:date
-      })
-    })
-    // console.log("borrowed book")
-    // console.log(borrowedBooks);
-    // return;
-
-    const data = {
-      borrowedBooks
-    };
-
-    //the data needs to be
-    // [
-    //   {
-    //     book,
-    //     schedule
-    //   } 
-    // ]
-
-    inputBook.map(async (e) => {//inputBook is a list of id of will-be-borrowed book
-      const book = state.book.filter((f) => f._id === e);//input book should be an array of book id because they compare it with f._id
-      const availableChange = book[0].available - 1;//kalau bukunya dipinjam, availablenya kurang satu
-      await patchData(//update jumlah buku yang tersedia setelah dipinjam
+    //update the data of the borrowed book
+    //particularly the number of available book is going to decrease by 1
+    inputBook.map(async (e) => {
+      const book = state.book.filter((f) => f._id === e);
+      const availableChange = book[0].available - 1;
+      await patchData(
         `${ServerURL}/book/${e}`,
         { available: availableChange },
         localStorage.getItem('token')
       );
     });
 
-    //this is setting the borrowed book for the member
-    //going this way a member can only borrow book one time
-    //if he borrow one, and want to borrow again, it will be hard to do it
-    const changeMember = await patchData(//this is the function that say user borrrow a book
+
+    //update member data
+
+    //find member data that was inputted into 'Peminjam Buku'
+    const member = state.member.filter(m=>{
+      if(m._id === inputMember)
+        return m
+    })[0]
+
+    //get the member's borrowedBooks data
+    //update the borrowedBooks data with new borrow book data
+    var borrowedBooks = member.borrowedBooks;
+    const date = new Date(Date.now() + 3600 * 1000 * day);
+    inputBook.forEach(b=>{
+      borrowedBooks.push({
+        book:b,
+        schedule:date
+      })
+    })
+
+    //send request to update member's borrowedBooks data 
+    const changeMember = await patchData(
       `${ServerURL}/member/${inputMember.substring(0, 24)}`,
-      // `${ServerURL}/member/${inputMember}`,
-      data,
+      {borrowedBooks},
       localStorage.getItem('token')
     );
     
     //as the transaction succesful, get data member 
-    //and get data book again, update them
+    //and get data book again
     if (changeMember) {
       const getDataMember = await getData(
         `${ServerURL}/member`,
@@ -107,39 +98,35 @@ export default function BorrowBook() {
   }
 
   function handleClickPlus() {
-    //get member amount of borrowed books
-    console.log("handle click plus called")
     if(inputMember !== ''){
+      //cari jumlah buku yang dipinjam member
       const member = state.member.filter(m=>{
         if(m._id === inputMember){
           return m
         }
       })
-      // console.log(member)
       const amountOfBorrowedBook = member[0].borrowedBooks.length
-      if (count.length <= 4-amountOfBorrowedBook) {//maksimal cuma bisa pinjam 5 buku (i.e. klik tombol tambah yang merah itu cuma bisa sampai lima kali pinjam)
+      
+      //set jumlah input 'Tambah Buku'
+      if (count.length <= 4-amountOfBorrowedBook) {
         setCount([...count, count.length + 1]);
-        console.log("count berubah");
       }
     }
   }
 
   function handleChangeBook(e) {
-    console.log("handle change book called")
-    // console.log(e.bookAvilable);
-    console.log(e.target.value)
+    //cari data buku sesuai dengan yang diinputkan ke dalam input Tambah Buku
+    //set ke dalam array InputBook dan NameBook (list buku yang akan dipinjam)
     const book = e.bookAvilable.filter(b=>{
       if (b.title === e.target.value){
         return b
       }
     })
-
     if(book.length != 0){
       setInputBook([
-        ...inputBook,//what is e.target.id 
+        ...inputBook, 
         (inputBook[Number(e.target.id)] = book[0]._id)
       ]);
-      
       setNameBook([
         ...nameBook,
         (nameBook[Number(e.target.id)] = book[0].title)
@@ -148,6 +135,8 @@ export default function BorrowBook() {
   }
 
   function handleOnchengeInputMember(e) {
+    //cari dan set data member sesuai dengan input ke dalam input member
+    //set ke variabel InputMember
     const member = memberNotBorrowBook.filter(m=>{
       if (m.name === e.target.value){
         return m
@@ -157,12 +146,14 @@ export default function BorrowBook() {
       setInputMember(member[0]._id);
   }
 
+  //ubah hari ke dalam format 24 jam
   function handleChangeDay(e) {
     setDay(Number(e.target.value) * 24);
   }
 
+  //render komponen BookInput (input buku yang bakal dipinjam)
+  //jumlahnya sama dengan variabel count
   function generateBookInput(){
-    console.log("generate book input called")
     var bookInput = [];
     for(var i=0;i<count.length;i++){
       bookInput.push(
@@ -208,29 +199,7 @@ export default function BorrowBook() {
           </button>
           {
             generateBookInput()
-            // for(var i=0;i<count.length;i++){
-            //   return(
-            //     <BookInput
-            //       ocChangeProps={handleChangeBook}
-            //       key={i}
-            //       name={`inputBook${i}`}
-            //       id={i}
-            //       bookSelect={nameBook}
-            //     />  
-            //   )
-            // }
           }
-          {/* {count.map((e, i) => {
-            return (
-              <BookInput
-                ocChangeProps={handleChangeBook}
-                key={i}
-                name={`inputBook${i}`}
-                id={i}
-                bookSelect={nameBook}
-              />
-            );
-          })} */}
           <div className='inputHari'>
             <input
               type='number'
@@ -256,31 +225,28 @@ function BookInput(props) {
 
   useEffect(() => {
     if (state.book !== null && state.book !== undefined) {
-      
+      //cari buku yang available (bisa dipinjam)
+      //kriterianya:
+      //  1. jumlahnya lebih dari 0
+      //  2. belum pernah dipinjam sebelumnya
+      //  3. tidak ada dalam daftar list BookInput (buku yang akan dipinjam)
       const bookAvilable = state.book.filter((e) => {
         var available=true;
-        // console.log("props")
-        // console.log(props.memberId)
         if(props.memberId){
           const member = state.member.filter(m=>{
             if(m._id === props.memberId){
               return m
             }
           })
-          // console.log("member")
-          // console.log(member)
           const memberBorrowedBookIds = member[0].borrowedBooks.map(b=>{
             return b.book
           })
           memberBorrowedBookIds.forEach(id=>{
-            console.log("book id: "+e._id)
-            console.log("member borrowed book id: "+id)
             if (e._id === id){
               available=false;
               return;
             }
           })
-
           if(available == false){
             return;
           }
@@ -295,17 +261,7 @@ function BookInput(props) {
             return e
           }
         }
-        // return (
-        //   e.available.books !== 0 &&//shouldnt this just e.available !== 0
-        //   e.title !== book1 &&
-        //   e.title !== book2 &&
-        //   e.title !== book3 &&
-        //   e.title !== book4 &&
-        //   e.title !== book5
-        // );
       });
-      console.log("book available: ")
-      console.log(bookAvilable);
       setBookAvilable(bookAvilable);
     }
   }, [state, book1, book2, book3, book4, book5]);

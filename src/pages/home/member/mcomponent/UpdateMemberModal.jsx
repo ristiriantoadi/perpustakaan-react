@@ -30,8 +30,6 @@ export default function UpdateMemberModal(props) {
         kelas: kelas.current.value,
 
       };
-      console.log("new state form update member")
-      console.log(newStateFprmUpdateMember)
       patchData(
         `${ServerURL}/member/${id.current.value}`,
         newStateFprmUpdateMember,

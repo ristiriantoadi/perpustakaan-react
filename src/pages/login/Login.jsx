@@ -16,7 +16,6 @@ export default function Login() {
   function handleSubmit(e) {
     if (!loading) {
       setLoading(true);
-      console.log(formLogin);
       postData(`${ServerURL}/login`, formLogin).then(function (response) {
         const { token, username } = response.data;
         localStorage.setItem('token', token);

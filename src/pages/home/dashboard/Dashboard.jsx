@@ -12,13 +12,15 @@ export default function Dashboard() {
   useEffect(() => {
     let dtchrt = [];
     document.title = 'Perpustakaan';
+    
+    //cari member yang punya pinjaman buku
     if (state.member !== null) {
       const rs = state.member.filter((e) => {
-        // return e.borrowedBooks.books.length !== 0;
         return e.borrowedBooks.length !== 0
       });
-      setBorrower(rs.length);//rs is the subset of member that have borrowed book
+      setBorrower(rs.length);
     }
+    //ini belum, work-in-progress
     state.member &&
       state.member
         .filter((e) => {
